@@ -1,0 +1,35 @@
+ion-card{
+    --background:rgb(173, 171, 169);
+    -webkit-box-shadow: 4px 7px 18px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 7px 18px -5px rgba(0,0,0,0.75);
+    box-shadow: 4px 7px 18px -5px rgba(0,0,0,0.75);
+
+}
+
+ion-card-title{
+    color: rgb(26, 25, 25);
+   // font-family: "Latin Modern Roman 10";
+   // font-style: italic;
+}
+
+ion-card-content{
+    color: rgb(26, 25, 25);
+   // font-family: "Latin Modern Roman 10";
+    //font-style: italic;
+}
+
+ion-img{
+    background: rgb(70, 69, 69);
+    //height: 25vh !important;
+    //width: auto !important;
+    height: 100%;
+    width: 100%;
+    margin: auto !important;
+    display: block !important;
+    padding-bottom: 10px;
+}
+
+.title
+{
+    --background:rgb(173, 171, 169);
+}
