@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Bienvenido {{userProfile?.name}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button routerLink="/profile">
+          <ion-icon slot="icon-only" name="person"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+    <ion-card *ngFor="let item of students">
+        <ion-card-header>
+          <ion-row justify-content-between>
+       
+            <ion-col  col-auto>
+              <ion-row text-wrap>
+                <h2> Usuario: {{item.nombre}} </h2>
+              </ion-row>
+              <ion-row text-wrap>
+                <h1>Tiempo Logrado:{{item.tiempo}} </h1>
+              </ion-row>
+              <ion-row class="buttons">
+                <ion-col>
+                                     </ion-col>
+                <ion-col>
+                   
+                </ion-col>
+                <ion-col>
+                  <ion-input type="number" value="1"></ion-input> 
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        </ion-card>
+
+  <ion-button routerLink="/juego" class="btn lg cta" >Volver</ion-button>  
+</ion-content>

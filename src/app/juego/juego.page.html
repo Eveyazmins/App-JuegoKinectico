@@ -1,0 +1,29 @@
+
+<div class="tiempo">
+  <h2 text-center class="color-black font-lg"> Tiempo: {{time}} </h2>
+  
+</div>
+
+<ion-content class="juego">
+
+  <!--
+    <p> x:{{x}}   </p>
+    <p> y:{{y}}   </p>
+    <p> z:{{z}}   </p>
+    <p> pantallaAlto:{{pantallaAlto}}   </p>
+    <p> pantallaAncho:{{pantallaAncho}} </p>
+    <p> izq= {{izquierda}}     </p>
+    <p> arr={{arriba}}  </p>
+
+    -->
+     <!--img  style="width:80px;height: 80px;position:absolute;z-index:3;" 
+      src="../assets/img/robot_normal.png"-->
+      
+      <img [ngStyle]="{'width.px':anchoDeFoto ,'top.px':y ,'left.px':x} "
+       style="position:absolute;z-index:3;"   [src]="rutaDeFoto">
+<!--
+       <ion-button (click)="CreateRecord()">Guardar</ion-button>
+       <ion-button routerLink="/resultados" >Resultado</ion-button>
+
+-->
+</ion-content>

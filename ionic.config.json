@@ -1,0 +1,7 @@
+{
+  "name": "kidTab",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
