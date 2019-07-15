@@ -8,6 +8,7 @@ import {  OnDestroy } from '@angular/core';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ChatsService } from '../servicios/chats.service';
+import { ToastController, NavController, ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -44,8 +45,12 @@ export class JuegoPage implements OnInit,OnDestroy {
   data:any;
   onSuccess : any;
   onError : any;
+
+  public userProfile: any;
+  name:any;
+
 constructor(private deviceMotion: DeviceMotion,private crudService: ChatsService,    private router: Router,
-  private nativeAudio: NativeAudio,private vibration: Vibration, private js: JuegoService
+  private nativeAudio: NativeAudio,private vibration: Vibration, private js: JuegoService, public toastController: ToastController
   ) {
   this.options={ frequency: 50 };
   this.pantallaAncho = window.screen.width;
@@ -54,7 +59,19 @@ constructor(private deviceMotion: DeviceMotion,private crudService: ChatsService
   this.rutaDeFoto= this.js.personaje;
   this.anchoDeFoto=80;
 }
-ngOnInit()    {  
+ngOnInit()    {
+  
+  this.crudService
+  .getUserProfile()
+  .get()
+  .then( userProfileSnapshot => {
+    this.userProfile = userProfileSnapshot.data();
+     console.log(this.userProfile);
+    this.name = userProfileSnapshot.data().name;
+    console.log("ELNOMBRE:" +this.name);
+//this.perfil= userProfileSnapshot.data().perfil;
+  });
+
  // this.nativeAudio.preloadSimple('uniqueId1', 'assets/sound/juego.mp3').then(this.onSuccess, this.onError);
   this.nativeAudio.preloadSimple('uniqueId2', 'assets/sonido/perdistePPT.ogg').then(this.onSuccess, this.onError);
   //this.nativeAudio.play('uniqueId1').then(this.onSuccess, this.onError);
@@ -71,30 +88,34 @@ ngOnInit()    {
           this.z= aceleracion.z*100; 
           if (this.x > this.pantallaAncho || this.x<-60)//horizontal 4seg
           {
-            this.CreateRecord();
-            this.router.navigateByUrl('resultados');
-            this.vibration.vibrate(5000);
-               this.nativeAudio.play('uniqueId2').then(this.onSuccess, this.onError);
-               this.vibration.vibrate(1000);
+
+               this.CreateRecord();
                this.router.navigateByUrl('resultados');
-               this.subscription.unsubscribe();
-               this.stopclock();
-               this.router.navigateByUrl('resultados');
+               this.vibration.vibrate(5000);
+                  this.nativeAudio.play('uniqueId2').then(this.onSuccess, this.onError);
+                  this.vibration.vibrate(1000);
+                  this.router.navigateByUrl('resultados');
+                  this.subscription.unsubscribe();
+                  this.stopclock();
+                  this.router.navigateByUrl('resultados');
 
           }
           if (this.y < -20 || this.y>740)//horizontal 4seg
           {
-            this.CreateRecord();
-            this.router.navigateByUrl('resultados');
-            this.vibration.vibrate(5000);
-               this.nativeAudio.play('uniqueId2').then(this.onSuccess, this.onError);
-               this.vibration.vibrate(1000);
-               this.subscription.unsubscribe();
-               alert("Juego Perdido: Tu Tiempo fue:");
-               this.CreateRecord();
+     this.CreateRecord();
+     this.router.navigateByUrl('resultados');
+     this.vibration.vibrate(5000);
+        this.nativeAudio.play('uniqueId2').then(this.onSuccess, this.onError);
+        this.vibration.vibrate(1000);
+        this.router.navigateByUrl('resultados');
+        this.subscription.unsubscribe();
+        this.stopclock();
+        this.router.navigateByUrl('resultados');
+        //alert("Juego Perdido: Tu Tiempo fue:");
+        //this.CreateRecord();
 
-               this.router.navigateByUrl('resultados');
-       
+        this.router.navigateByUrl('resultados');
+
           }
      
 
@@ -105,13 +126,15 @@ ngOnInit()    {
  }
 
  CreateRecord() {
-   alert("crear")
+  // alert("crear")
+  this.perdioToast();
   let newStoppedDuration:any = (+new Date() - this.timeStopped)
   this.stoppedDuration = this.stoppedDuration + newStoppedDuration;
 
+
   let record = {};
   //record['nombre'] = this.nombre;
-  record['nombre'] = "222";
+  record['nombre'] = this.name;
   record['tiempo'] =  this.stoppedDuration ;
   
   //record['foto'] = this.foto;
@@ -178,6 +201,19 @@ ngOnInit()    {
     this.zeroPrefix(min, 2) + ":" +
     this.zeroPrefix(sec, 2) + "." +
     this.zeroPrefix(ms, 3);
+  }
+
+
+  async perdioToast() {
+    
+      const toast = await this.toastController.create({
+        message: 'Perdiste!',
+        showCloseButton: true,
+        position: 'top',
+        closeButtonText: 'Aceptar',
+        duration: 3000
+      });
+      toast.present();
   }
   
 

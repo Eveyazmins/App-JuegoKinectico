@@ -7,6 +7,7 @@ import { LoadingController, AlertController } from '@ionic/angular';
 //import { AuthService } from '../../services/user/auth.service';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { ToastController, NavController, ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class LoginPage implements OnInit {
     public alertCtrl: AlertController,
     private authService: AuthService,
     private router: Router,
+    public toastController: ToastController
    //private formBuilder: FormBuilder)
   )
     { }
@@ -35,7 +37,8 @@ export class LoginPage implements OnInit {
   {
     this.authService.login(this.email, this.password).then( res =>{
       this.router.navigateByUrl('menu');
-    }).catch(err => alert('los datos son incorrectos o no existe el usuario'))
+   // }).catch(err => alert('los datos son incorrectos o no existe el usuario'))
+  }).catch(err =>this.perdioToast()) 
   }
   async elegirusuario() {
     const actionSheet = await this.actionSheetController.create({
@@ -44,28 +47,28 @@ export class LoginPage implements OnInit {
         role: 'destructive',
         handler: () => {
           this.email="admin@gmail.com";
-          this.password="123456";
+          this.password="111111";
           console.log('Delete clicked');
         }
       }, {
         text: 'Invitado',
         handler: () => {
           this.email="invitado@gmail.com";
-          this.password="123456";
+          this.password="111111";
           console.log('Share clicked');
         }
       }, {
         text: 'Usuario',
         handler: () => {
           this.email="usuario@gmail.com";
-          this.password="123456";
+          this.password="111111";
           console.log('Play clicked');
         }
       }, {
         text: 'Anonimo',
         handler: () => {
-          this.email="Anonimo@gmail.com";
-          this.password="123456";
+          this.email="anonimo@gmail.com";
+          this.password="111111";
           console.log('Favorite clicked');
         }
       },
@@ -73,7 +76,7 @@ export class LoginPage implements OnInit {
         text: 'tester',
         handler: () => {
           this.email="tester@gmail.com";
-          this.password="123456";
+          this.password="111111";
           console.log('Favorite clicked');
         }
       },
@@ -90,5 +93,18 @@ export class LoginPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+
+  async perdioToast() {
+    
+    const toast = await this.toastController.create({
+      message: 'Los datos son incorrectos o no existe el usuario',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'Aceptar',
+      duration: 3000
+    });
+    toast.present();
+}
 
 }

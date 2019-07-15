@@ -10,6 +10,8 @@ import {AuthService} from "../servicios/auth.service";
 //import { FCM } from '@ionic-native/fcm/ngx';//AGREGADO PUSH NOTIF
 //import {EmpleadosService} from '../../services/empleados/empleados.service';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
+
+
 @Component({
   selector: 'app-resultados',
   templateUrl: './resultados.page.html',
@@ -30,7 +32,7 @@ export class ResultadosPage implements OnInit {
   z:string;
   timeStamp:string;
 
-  constructor(private crudService: ChatsService,private user:AuthService) { 
+  constructor(private crudService: ChatsService,private user:AuthService, private router: Router) { 
   
   }
 
@@ -40,7 +42,7 @@ export class ResultadosPage implements OnInit {
     .get()
     .then( userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.data();
-      // console.log(this.userProfile);
+       console.log(this.userProfile);
       this.name = userProfileSnapshot.data().name;
 //this.perfil= userProfileSnapshot.data().perfil;
     });
@@ -62,6 +64,11 @@ export class ResultadosPage implements OnInit {
     });
   }
 
+  irMenu()
+  {
+    this.router.navigateByUrl('menu');
+
+  }
 
 
 
